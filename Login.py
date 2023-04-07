@@ -1,44 +1,50 @@
-import CSV_Parser
+import Load
 
 def CheckCredential(uname, pw):
-    user_data = CSV_Parser.CSV_Parser('user')
+    
+    user_data = Load.CSV_Parser('user')
     print(user_data)
     
     #username
     Found = False
-    for i in range(0+3,user_data[1]+1, 3):
-        if uname == user_data[0][i]:
+    role = ''
+    for i in user_data:
+        if uname == i[0]:
             Found = True
+            role = i[2]
             break
     
     if not Found:
-        return 2
+        return [2, 0]
     
     
     #password
     Found = False
-    for i in range(1+3,user_data[1]+2, 3):
-        if pw == user_data[0][i]:
+    for i in user_data:
+        if pw == i[1]:
             Found = True
+            role = i[2]
+            break
     
     if not Found:
-        return 3
+        return [3, 0]
     
     # true
-    return 1
+    if role == 'bandung_bondowoso':
+        return [1, 1]
+    elif role == 'roro_jonggrang':
+        return [1, 4]
+    elif role == 'pembangun':
+        return [1, 2]
+    elif role == 'pengumpul':
+        return [1,3]
 
-def Login():
-    uname = input('Username: ')
-    pw = input('Password: ')
+def login(access):
+    # input apa yang diterima, yaitu access
+    # return ???
 
-    resp = CheckCredential(uname, pw)
 
-    if resp == 1:
-        print(f'Selamat datang, {uname}')
-    elif resp == 2:
-        print('Username tidak terdaftar!')
-    elif resp == 3:
-        print('Password salah!')
+
     
-Login()
+# login()
 # print(CheckCredential('lmao','sad'))
